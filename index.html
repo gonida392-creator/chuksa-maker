@@ -2,8 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>축사 메이커 · 회식/모임 축사 만들기</title>
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0f1226" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="축사메이커" />
 <style>
   :root {
     --bg: #0f1226;
@@ -618,6 +626,13 @@ document.getElementById('saveKey').onclick = ()=>{
   setApiKey(k); document.getElementById('apiKey').value = ""; clearErr();
 };
 document.getElementById('clearKey').onclick = ()=>{ setApiKey(""); };
+
+// PWA: 서비스워커 등록 (홈 화면 설치 + 오프라인)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
 document.getElementById('copy').onclick = async ()=>{
   try{
     await navigator.clipboard.writeText(window._lastFull || "");
